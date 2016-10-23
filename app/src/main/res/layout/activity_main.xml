@@ -7,11 +7,9 @@
         android:id="@+id/bgImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/gridContent"
         android:scaleType="centerCrop" />
 
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/parentlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,24 +17,62 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/volumnControl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight=".1"
-            android:background="#60000000"
+            android:layout_alignParentTop="true"
+            android:background="#60bebdbd"
             android:gravity="center"
-            android:padding="3dp"
-            android:text="Touchez une photo pour écouter le CD"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#bebdbd" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#60bebdbd"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <Button
+                    android:id="@+id/volumnDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_volume_down"
+                    android:text="Volumn down -"
+                    android:textAllCaps="false" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#000000" />
+
+                <Button
+                    android:id="@+id/volumnUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_volume_up"
+                    android:text="Volumn up +"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/gridContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/volumnControl"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_weight=".9"
 
@@ -58,50 +94,24 @@
             </GridLayout>
         </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/volumnControl"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="top"
             android:layout_weight=".1"
-            android:background="#60bebdbd"
+            android:background="#60000000"
             android:gravity="center"
-            android:orientation="vertical">
+            android:padding="3dp"
+            android:text="Touchez une photo pour écouter le CD"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#bebdbd" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#60bebdbd"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <ImageView
-                    android:id="@+id/volumnDown"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_volume_down" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#000000" />
-
-                <ImageView
-                    android:id="@+id/volumnUp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_volume_up" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <TextView
@@ -115,5 +125,5 @@
         android:gravity="center"
         android:text="Folder Not Found"
         android:textSize="30sp"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 </FrameLayout>

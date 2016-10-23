@@ -20,14 +20,17 @@ import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCompletionListener, View.OnClickListener {
@@ -57,22 +60,23 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
     String currentFolderString = null;
 
     LinearLayout volumnControl;
-    LinearLayout parentlayout;
-    ImageView volumnUp, volumnDown;
+    RelativeLayout parentlayout;
+    Button volumnUp, volumnDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //  mGridView = (GridView) findViewById(R.id.gvMain);
         noFolderFoundText = (TextView) findViewById(R.id.tv_no_folder);
         bgImage = (ImageView) findViewById(R.id.bgImage);
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
         volumnControl = (LinearLayout) findViewById(R.id.volumnControl);
-        parentlayout = (LinearLayout) findViewById(R.id.parentlayout);
+        parentlayout = (RelativeLayout) findViewById(R.id.parentlayout);
 
-        volumnUp = (ImageView) findViewById(R.id.volumnUp);
-        volumnDown = (ImageView) findViewById(R.id.volumnDown);
+        volumnUp = (Button) findViewById(R.id.volumnUp);
+        volumnDown = (Button) findViewById(R.id.volumnDown);
 
         volumnControl.bringToFront();
         parentlayout.setVisibility(View.GONE);
@@ -138,9 +142,21 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
         File currentFile = null;
 
 
-        currentFolderString =  Utils.getStorageDirectoriesCustom() + Constants.FILES_FOLDER_NAME;
-        currentFile = new File(currentFolderString);
+        //  currentFolderString = Utils.getStorageDirectoriesCustom() + Constants.FILES_FOLDER_NAME;
 
+
+        Map<String, File> externalLocations = Utils.getAllStorageLocations();
+        File sdCard = externalLocations.get(Utils.SD_CARD);
+        File externalSdCard = externalLocations.get(Utils.EXTERNAL_SD_CARD);
+
+
+        if (externalSdCard != null) {
+            currentFolderString = externalSdCard.getPath() + Constants.FILES_FOLDER_NAME;
+        } else {
+            currentFolderString = sdCard.getPath() + Constants.FILES_FOLDER_NAME;
+        }
+
+        currentFile = new File(currentFolderString);
         if (currentFile.exists()) {
             parentlayout.setVisibility(View.VISIBLE);
             File folder = new File(currentFolderString + Constants.FILES_FOLDER_NAME_PICTURES);
@@ -220,18 +236,16 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
             int height = metrics.heightPixels;
 
 
-
-            switch (deviceType()){
+            switch (deviceType()) {
                 case "mobile":
                     param.height = (int) (height / 4);
                     param.width = (int) (width / 4.2);
                     break;
                 case "tablet":
                     param.height = (int) (height / 3.8);
-                    param.width = (int) (width / 4.1);
+                    param.width = (int) (width / 4);
                     break;
             }
-
 
 
             switch (getRotation(getApplicationContext())) {
