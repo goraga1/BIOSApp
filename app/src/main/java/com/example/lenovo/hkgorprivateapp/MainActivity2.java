@@ -30,6 +30,8 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -40,8 +42,8 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
     private ImageView lastPPView;
 
 
-    private File[] allImageFiles;
-    private File[] allMusicFiles;
+    private List<File> allImageFiles;
+    private List<File> allMusicFiles;
 
     int item;
     int total = 12;
@@ -162,10 +164,13 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
             File folder = new File(currentFolderString + Constants.FILES_FOLDER_NAME_PICTURES);
             File musicFolder = new File(currentFolderString + Constants.FILES_FOLDER_NAME_SOUNDS);
             if (folder.exists() && musicFolder.exists()) {
+                allImageFiles = new ArrayList<>();
+                allMusicFiles = new ArrayList<>();
 
-                allImageFiles = folder.listFiles();
-                allMusicFiles = musicFolder.listFiles();
-                if (allImageFiles.length != 0 && allMusicFiles.length != 0) {
+
+                allImageFiles = Arrays.asList(folder.listFiles());
+                allMusicFiles = Arrays.asList(musicFolder.listFiles());
+                if (allImageFiles.size() != 0 && allMusicFiles.size() != 0) {
 
                     File bg = new File(currentFolderString + Constants.FILES_FOLDER_NAME_BACKGROUND);
 
@@ -180,8 +185,8 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
 
 
                     int length = 0;
-                    int lengthImages = allImageFiles.length;
-                    int lengthSounds = allMusicFiles.length;
+                    int lengthImages = allImageFiles.size();
+                    int lengthSounds = allMusicFiles.size();
 
                     if (lengthImages <= lengthSounds) {
                         length = lengthImages;
@@ -196,8 +201,8 @@ public class MainActivity2 extends AppCompatActivity implements MediaPlayer.OnCo
 
                     for (int i = 0; i < length; i++) {
                         DataModel dataModel = new DataModel();
-                        dataModel.setMusicPath(allMusicFiles[i] + "");
-                        Bitmap bmImg = BitmapFactory.decodeFile(allImageFiles[i] + "");
+                        dataModel.setMusicPath(allMusicFiles.get(i) + "");
+                        Bitmap bmImg = BitmapFactory.decodeFile(allImageFiles.get(i) + "");
                         dataModel.setMyBitmap(bmImg);
                         myList.add(dataModel);
                     }
