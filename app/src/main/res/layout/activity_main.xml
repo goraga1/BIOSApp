@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_volume_down"
-                    android:text="Volumn  -"
+                    android:text="Volume  -"
                     android:textAllCaps="false" />
 
                 <View
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_volume_up"
-                    android:text="Volumn  +"
+                    android:text="Volume  +"
                     android:textAllCaps="false" />
 
             </LinearLayout>
